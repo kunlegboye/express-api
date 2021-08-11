@@ -6,7 +6,7 @@ import {v4 as uuidv4} from "uuid";
 import { prototype } from "events";
 import { AnyAaaaRecord } from 'dns';
 import fs from 'fs';
-const fromDataJason = require("/Users/decagon/Documents/week-6-node-008-kunlegboye/src/routes/data.json");
+const fromDataJason = require("../routes/data.json");
 
 
 
@@ -35,7 +35,7 @@ const id = +req.params.id;
  const user = fromDataJason.filter((user:any)=> user.id !== id);
  console.log(user);
 //  console.log(fromDataJason);
-fs.writeFileSync("/Users/decagon/Documents/week-6-node-008-kunlegboye/src/routes/data.json", JSON.stringify(user, null, 4), "utf-8")
+fs.writeFileSync("./lib/routes/data.json", JSON.stringify(user, null, 4), "utf-8")
 res.send(`user with an id ${id} deleted from the database`);
 });
 
@@ -69,7 +69,7 @@ router.post('/',function (req:Request, res:Response, next:NextFunction){
   fromDataJason.push(newpostdata);
   // console.log(dataPath);
   fs.writeFile(
-  "/Users/decagon/Documents/week-6-node-008-kunlegboye/src/routes/data.json",
+  "./lib/routes/data.json",
   JSON.stringify(fromDataJason, null, " "),
   (err) => {
   if (err) throw err;
@@ -103,7 +103,7 @@ if(country)userupdate.country = country;
 if(noOfEmployees)userupdate.noOfEmployees = noOfEmployees;
 if(employees)userupdate.employees = employees;
 fs.writeFile(
-  "/Users/decagon/Documents/week-6-node-008-kunlegboye/src/routes/data.json",
+  "./lib/routes/data.json",
   JSON.stringify(fromDataJason, null, " "),
   (err) => {
   if (err) throw err;
