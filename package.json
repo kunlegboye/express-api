@@ -23,7 +23,7 @@
   "jest": {
     "testEnvironment": "node",
     "testPathIgnorePatterns": ["src"],
-    "coveragePathIgnorePattern": ["/node_modules/"]
+    "coveragePathIgnorePatterns": ["/node_modules/"]
   },
   "main": "index.js",
   "repository": "https://github.com/decadevs/week-6-node-008-kunlegboye.git",

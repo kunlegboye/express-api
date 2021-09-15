@@ -5,17 +5,19 @@ import {Proto} from "../interface";
 import {v4 as uuidv4} from "uuid";
 import { prototype } from "events";
 import { AnyAaaaRecord } from 'dns';
+import path from "path";
 import fs from 'fs';
-const fromDataJason = require("../routes/data.json");
+let fromDataJason = require("../../data.json");
+let databasePath = path.resolve(__filename,"../../../data.json")
 
-
-
+//console.log(fromDataJason)
 /* GET users listing. */
 router.get('/', function(req:Request, res:Response, next:NextFunction) {
   if(fromDataJason.length === 0){
     res.status(404).send("Page not found");
   }else {
     res.status(200).send(fromDataJason);
+    console.log(fromDataJason)
   }
 });
 
@@ -29,15 +31,7 @@ router.get('/:id',(req:Request, res:Response,next:NextFunction)=>{
   }
 });
   //This is to delete from the data base
-router.delete('/:id',(req:Request, res:Response,next:NextFunction)=>{
-  
-const id = +req.params.id;
- const user = fromDataJason.filter((user:any)=> user.id !== id);
- console.log(user);
-//  console.log(fromDataJason);
-fs.writeFileSync("./lib/routes/data.json", JSON.stringify(user, null, 4), "utf-8")
-res.send(`user with an id ${id} deleted from the database`);
-});
+
 
 //This is to post to the data base
 router.post('/',function (req:Request, res:Response, next:NextFunction){
@@ -66,17 +60,11 @@ router.post('/',function (req:Request, res:Response, next:NextFunction){
   noOfEmployees: noOfEmployees || 0,
   employees: employees || [],
   };
+
   fromDataJason.push(newpostdata);
-  // console.log(dataPath);
-  fs.writeFile(
-  "./lib/routes/data.json",
-  JSON.stringify(fromDataJason, null, " "),
-  (err) => {
-  if (err) throw err;
-  console.log("Saved!");
-  }
-  );
-  res.send(newpostdata);
+  console.log("Write file is about to happen...")
+  fs.writeFileSync(databasePath, JSON.stringify(fromDataJason, null, " "));
+  res.status(201).json(newpostdata);
   
 
 });
@@ -103,7 +91,7 @@ if(country)userupdate.country = country;
 if(noOfEmployees)userupdate.noOfEmployees = noOfEmployees;
 if(employees)userupdate.employees = employees;
 fs.writeFile(
-  "./lib/routes/data.json",
+  databasePath,
   JSON.stringify(fromDataJason, null, " "),
   (err) => {
   if (err) throw err;
@@ -113,7 +101,12 @@ fs.writeFile(
 res.send(`user with an id ${id} has been updated`);
   });
 
-
+  router.delete('/:id',(req:Request, res:Response,next:NextFunction)=>{
+    const id = +req.params.id;
+    fromDataJason = fromDataJason.filter((user:any)=> user.id !== id);
+    res.send(`user with an id ${id} deleted from the database`);
+    fs.writeFileSync(databasePath, JSON.stringify(fromDataJason, null, 4), "utf-8")
+    });
 
 
 

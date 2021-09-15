@@ -31,18 +31,18 @@ describe("To test for getting  data from database", () =>{
 });
 
 describe("This will test for get", () =>{
-    test("Get test done", async () =>{
-        if(data.length>0)
-        await tester(appFolder)
-        .get("/:id")
-        .set("accept", "application/json")
-        .expect(200)
+    // test("Get test done", async () =>{
+    //     if(data.length>0)
+    //     await tester(appFolder)
+    //     .post("/:id")
+    //     .set("accept", "application/json")
+    //     .expect(200)
 
-     });
+    //  });
     test("data not found", async () => {
         
         const data = await tester(appFolder)
-         .get("/:idd")
+         .post("/:idd")
          .set("Accept", "application/json")
          .expect(404)
          
@@ -55,7 +55,7 @@ describe("This will test for delete", () =>{
 
         await tester(appFolder)
         .delete("/users/2")
-
+        .set("accept", "application/json")
         .expect(200)
 
         
@@ -73,14 +73,14 @@ describe("This will test for delete", () =>{
 
 
 describe("This will test for patch", () =>{
-    test("test done", async () =>{
-        if(data.length>0)
-        await tester(appFolder)
-        .patch("/:id")
-        .set("accept", "application/json")
-        .expect(200)
+    // test("test done", async () =>{
+    //     if(data.length>0)
+    //     await tester(appFolder)
+    //     .patch("/:id")
+    //     .set("accept", "application/json")
+    //     .expect(200)
 
-     });
+    //  });
     test("data not found", async () => {
         
         const data = await tester(appFolder)
